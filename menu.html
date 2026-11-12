@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Меню — Мачете</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Oswald:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root { --ink:#19120f; --muted:#6b5143; --paper:#f7edda; --cream:#fff7e9; --accent:#a83122; --orange:#ed5d2d; --lime:#c9ef53; --line:rgba(25,18,15,.14); --ease:cubic-bezier(.22,.7,.2,1); --gut:clamp(20px,5.7vw,82px); }
+    * { box-sizing:border-box; margin:0; padding:0; }
+    html { scroll-behavior:smooth; }
+    body { background:var(--paper); color:var(--ink); font-family:Manrope,system-ui,sans-serif; -webkit-font-smoothing:antialiased; }
+    a { color:inherit; text-decoration:none; }
+    .atmo { position:fixed; inset:0; z-index:-1; overflow:hidden; pointer-events:none; background:var(--paper); }
+    .atmo::before { content:""; position:absolute; width:70vw; height:48vw; max-height:560px; left:14vw; top:-24vw; border-radius:0 0 50% 50%; background:radial-gradient(ellipse at 50% 28%,rgba(237,93,45,.42),rgba(237,93,45,.14) 48%,rgba(247,237,218,0) 73%); filter:blur(20px); }
+    .nav { position:sticky; z-index:10; top:20px; margin:20px var(--gut) 0; height:60px; border-radius:999px; background:rgba(247,237,218,.94); backdrop-filter:blur(14px); display:grid; grid-template-columns:auto minmax(0,1fr) auto; align-items:center; padding:0 22px; box-shadow:0 1px 0 rgba(25,18,15,.06),0 10px 30px -18px rgba(25,18,15,.45); }
+    .brand { display:flex; align-items:center; gap:9px; white-space:nowrap; font:500 21px Oswald,sans-serif; letter-spacing:.08em; text-transform:uppercase; }
+    .brand svg { width:25px; height:25px; flex:none; }
+    .links { position:static; min-width:0; display:flex; justify-content:center; gap:clamp(14px,2.25vw,28px); font-size:clamp(11px,1vw,13px); font-weight:700; letter-spacing:.07em; text-transform:uppercase; white-space:nowrap; }
+    .links a { transition:color .2s ease,opacity .2s ease; }
+    .links a:hover,.links a[aria-current="page"] { color:var(--accent); }
+    .nav-right { min-width:0; font-size:13px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; white-space:nowrap; }
+    .nav-right a:hover { color:var(--accent); }
+    .menu-hero { max-width:1100px; margin:clamp(80px,13vh,150px) var(--gut) 80px; }
+    .eyebrow { color:var(--accent); font-size:12px; font-weight:800; letter-spacing:.17em; text-transform:uppercase; margin-bottom:20px; }
+    h1 { max-width:900px; font:400 clamp(68px,10vw,150px)/.88 Oswald,sans-serif; letter-spacing:-.025em; text-transform:uppercase; }
+    h1 span { color:var(--accent); }
+    .intro { max-width:530px; margin-top:34px; color:var(--muted); font-size:clamp(15px,1.5vw,20px); line-height:1.45; }
+    .menu-shell { margin:0 var(--gut) 120px; }
+    .menu-toolbar { display:flex; align-items:center; justify-content:space-between; gap:20px; padding:18px 0; border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+    .filters { display:flex; flex-wrap:wrap; gap:8px; }
+    .filter { appearance:none; border:1px solid var(--line); background:transparent; color:var(--ink); border-radius:999px; padding:10px 15px; font:700 11px Manrope,sans-serif; letter-spacing:.08em; text-transform:uppercase; cursor:pointer; transition:background .25s ease,color .25s ease,border-color .25s ease; }
+    .filter:hover,.filter.active { background:var(--ink); border-color:var(--ink); color:var(--paper); }
+    .note { color:var(--muted); font-size:12px; white-space:nowrap; }
+    .menu-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px; margin-top:28px; }
+    .card { position:relative; min-height:230px; padding:23px; border:1px solid var(--line); background:rgba(255,247,233,.46); display:flex; flex-direction:column; justify-content:space-between; overflow:hidden; transition:transform .3s var(--ease),background .3s ease,box-shadow .3s ease; }
+    .card::before { content:""; position:absolute; left:0; top:0; width:100%; height:6px; background:var(--accent); }
+    .card:nth-child(3n+2)::before { background:var(--orange); }
+    .card:nth-child(3n)::before { background:var(--lime); }
+    .card:hover { transform:translateY(-5px); background:var(--cream); box-shadow:0 18px 34px -24px rgba(25,18,15,.4); }
+    .card-top { display:flex; align-items:flex-start; justify-content:space-between; gap:16px; }
+    .category { color:var(--muted); font-size:10px; font-weight:800; letter-spacing:.13em; text-transform:uppercase; }
+    .price { color:var(--accent); font:500 29px/1 Oswald,sans-serif; white-space:nowrap; }
+    .card h2 { max-width:12em; margin-top:28px; font:400 clamp(25px,2.1vw,34px)/.98 Oswald,sans-serif; text-transform:uppercase; letter-spacing:.01em; }
+    .card p { max-width:28em; margin-top:15px; color:var(--muted); font-size:13px; line-height:1.45; }
+    .menu-footer { display:flex; align-items:center; justify-content:space-between; gap:30px; margin:80px var(--gut) 32px; padding-top:24px; border-top:1px solid var(--line); color:var(--muted); font-size:13px; }
+    .vk-link { color:var(--accent); font-weight:800; }
+    @media(max-width:900px){ .links { gap:14px; } .menu-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+    @media(max-width:650px){ .nav { top:12px; margin-top:12px; height:54px; padding:0 16px; } .links { display:none; } .menu-hero { margin-top:88px; } h1 { font-size:19vw; } .menu-toolbar { align-items:flex-start; flex-direction:column; } .note { white-space:normal; } .menu-grid { grid-template-columns:1fr; } .card { min-height:200px; } .menu-footer { align-items:flex-start; flex-direction:column; margin-top:56px; } }
+  </style>
+</head>
+<body>
+  <div class="atmo"></div>
+  <header class="nav">
+    <a class="brand" href="halden.html#hero"><svg viewBox="0 0 25 25" aria-hidden="true"><circle cx="12.5" cy="12.5" r="12" fill="#ed5d2d"/><path d="M6 17 17.5 5.5" stroke="#f7edda" stroke-width="2.4" stroke-linecap="round"/><path d="M7.5 8.5 16.5 17.5" stroke="#19120f" stroke-width="1.4" stroke-linecap="round" opacity=".7"/></svg><span>Мачете</span></a>
+    <nav class="links" aria-label="Основная навигация"><a href="halden.html#hero">Главная</a><a href="menu.html" aria-current="page">Меню</a><a href="halden.html#about">О нас</a><a href="halden.html#contacts">Контакты</a></nav>
+    <div class="nav-right"><a href="https://vk.ru/cafemachete">ВКонтакте</a></div>
+  </header>
+  <main>
+    <section class="menu-hero"><p class="eyebrow">Меню • Мачете • Казань</p><h1>Выбирай,<br><span>что по душе</span></h1><p class="intro">Большой стол начинается с первого заказа. Выбирайте любимое, собирайте компанию и оставайтесь до последней чашки.</p></section>
+    <section class="menu-shell" id="menu"><div class="menu-toolbar"><div class="filters" role="tablist" aria-label="Категории меню"><button class="filter active" data-category="all" type="button">Всё меню</button><button class="filter" data-category="bar" type="button">Бар</button><button class="filter" data-category="grill" type="button">Гриль</button><button class="filter" data-category="saj" type="button">Садж</button><button class="filter" data-category="garnish" type="button">Гарниры</button><button class="filter" data-category="hot" type="button">Горячее</button><button class="filter" data-category="pasta" type="button">Паста</button><button class="filter" data-category="pizza" type="button">Пицца</button><button class="filter" data-category="soup" type="button">Супы</button><button class="filter" data-category="salads" type="button">Салаты</button><button class="filter" data-category="snacks" type="button">Закуски</button><button class="filter" data-category="beer" type="button">К пиву</button><button class="filter" data-category="dessert" type="button">Десерты</button><button class="filter" data-category="banquet" type="button">Банкет</button></div><p class="note">Полное меню Мачете · цены по PDF меню</p></div><div class="menu-grid" id="menuGrid"></div></section>
+  </main>
+  <footer class="menu-footer"><span>Мачете · Казань · каждый день 12:00—23:00</span><a class="vk-link" href="https://vk.ru/cafemachete">Новости и акции во ВКонтакте ↗</a></footer>
+  <script>
+    const dishes = [
+      {cat:'bar',label:'Пиво разливное',name:'Мачете Светлое фильтрованное 4.8%',price:'0,5 л · 280 ₽',desc:'Светлое фильтрованное пиво.'},
+      {cat:'bar',label:'Пиво разливное',name:'Мачете Светлое нефильтрованное 5%',price:'0,5 л · 280 ₽',desc:'Светлое нефильтрованное пиво.'},
+      {cat:'bar',label:'Водка',name:'Ханская [ХИТ ✓]',price:'40 мл · 150 ₽ / 0,5 л · 1400 ₽',desc:'Классическая подача к большому столу.'},
+      {cat:'bar',label:'Водка',name:'Алтай',price:'40 мл · 150 ₽ / 0,5 л · 1400 ₽',desc:'Мягкая водка для застолья.'},
+      {cat:'bar',label:'Водка',name:'Тундра',price:'40 мл · 150 ₽ / 0,5 л · 1400 ₽',desc:'Подаём охлаждённой.'},
+      {cat:'bar',label:'Виски',name:'Steersman [ХИТ ✓]',price:'40 мл · 150 ₽ / 0,5 л · 1600 ₽',desc:'Виски для долгих разговоров.'},
+      {cat:'bar',label:'Виски',name:'Volga Valley',price:'40 мл · 150 ₽ / 0,7 л · 1600 ₽',desc:'Подача по классике.'},
+      {cat:'bar',label:'Виски',name:'Red Label',price:'40 мл · 250 ₽ / 0,7 л · 4500 ₽',desc:'Яркий характер и пряный финиш.'},
+      {cat:'bar',label:'Виски',name:'Jameson',price:'40 мл · 300 ₽ / 0,7 л · 5000 ₽',desc:'Ирландская классика.'},
+      {cat:'bar',label:'Коньяк',name:'Армянский орден 3 лет [ХИТ ✓]',price:'40 мл · 150 ₽ / 0,5 л · 1600 ₽',desc:'Мягкий коньяк с тёплым послевкусием.'},
+      {cat:'bar',label:'Коньяк',name:'Старейшина 5 лет',price:'40 мл · 200 ₽ / 0,5 л · 2000 ₽',desc:'Выдержанный вкус.'},
+      {cat:'bar',label:'Текила',name:'Агавита Голд',price:'40 мл · 250 ₽ / 0,7 л · 3000 ₽',desc:'Золотая текила.'},
+      {cat:'bar',label:'Текила',name:'Ольмека Сильвер',price:'40 мл · 300 ₽ / 0,7 л · 5000 ₽',desc:'Чистая серебряная текила.'},
+      {cat:'bar',label:'Вино белое',name:'Пино Гриджио (Италия) Полусухое',price:'100 мл · 280 ₽ / 0,75 л · 1800 ₽',desc:'Лёгкое белое вино.'},
+      {cat:'bar',label:'Вино белое',name:'Цинандали (Грузия) Сухое',price:'100 мл · 280 ₽ / 0,75 л · 1600 ₽',desc:'Сухое грузинское белое.'},
+      {cat:'bar',label:'Вино белое',name:'Алазанская долина (Грузия) Полусладкое',price:'100 мл · 280 ₽ / 0,75 л · 1600 ₽',desc:'Мягкое полусладкое вино.'},
+      {cat:'bar',label:'Вино красное',name:'Саперави (Грузия) Сухое',price:'100 мл · 280 ₽ / 0,75 л · 1600 ₽',desc:'Насыщенное красное вино.'},
+      {cat:'bar',label:'Вино красное',name:'Алазанская долина (Грузия) Полусладкое',price:'100 мл · 280 ₽ / 0,75 л · 1600 ₽',desc:'Полусладкое красное вино.'},
+      {cat:'bar',label:'Вино красное',name:'Киндзмараули (Грузия) Полусладкое [ХИТ ✓]',price:'100 мл · 280 ₽ / 0,75 л · 1600 ₽',desc:'Грузинская классика.'},
+      {cat:'grill',label:'Шашлыки на мангале',name:'Шашлык из бараньей корейки',price:'280-300 гр · 950 ₽',desc:'Бараньи ребра, лаваш, лук, сумах.'},
+      {cat:'grill',label:'Шашлыки на мангале',name:'Шашлык Баранина-мякоть',price:'280-300 гр · 950 ₽',desc:'Баранина мякоть, лаваш, лук, сумах.'},
+      {cat:'grill',label:'Шашлыки на мангале',name:'Шашлык Бараньи-яблочки',price:'280-300 гр · 950 ₽',desc:'Баранина яблочки, лаваш, лук, сумах.'},
+      {cat:'grill',label:'Шашлыки на мангале',name:'Шашлык Баранина семечки',price:'280-300 гр · 700 ₽',desc:'Баранина, лаваш, лук, сумах.'},
+      {cat:'grill',label:'Шашлыки на мангале',name:'Шашлык Люля баранина',price:'280-300 гр · 650 ₽',desc:'Люля, лаваш, лук, сумах.'},
+      {cat:'grill',label:'Шашлыки на мангале',name:'Шашлык Люля говядина',price:'280-300 гр · 680 ₽',desc:'Люля, лаваш, лук, сумах.'},
+      {cat:'grill',label:'Шашлыки на мангале',name:'Шашлык Люля куриный',price:'280-300 гр · 550 ₽',desc:'Люля, лаваш, лук, сумах.'},
+      {cat:'grill',label:'Шашлыки на мангале',name:'Шашлык Печеночный (ханкебаб)',price:'280-300 гр · 580 ₽',desc:'Печень, лаваш, лук, сумах.'},
+      {cat:'grill',label:'Шашлыки на мангале',name:'Шашлык Свиная шейка',price:'280-300 гр · 700 ₽',desc:'Свинина, лаваш, лук, сумах.'},
+      {cat:'grill',label:'Шашлыки на мангале',name:'Шашлык Свиная корейка',price:'280-300 гр · 650 ₽',desc:'Свинина, лаваш, лук, сумах.'},
+      {cat:'grill',label:'Шашлыки на мангале',name:'Шашлык Куриный (филе)',price:'280-300 гр · 600 ₽',desc:'Курица, лаваш, лук, сумах.'},
+      {cat:'grill',label:'Шашлыки на мангале',name:'Шашлык Куриные крылышки',price:'280-300 гр · 550 ₽',desc:'Курица, лаваш, лук, сумах.'},
+      {cat:'grill',label:'Шашлыки на мангале',name:'Дорадо целиком на мангале',price:'350-400 гр · 900 ₽',desc:'Соус Наршараб в подарок, лаваш, лук и долька лимона.'},
+      {cat:'grill',label:'Шашлыки на мангале',name:'Шашлык морской язык на мангале',price:'280-300 гр · 580 ₽',desc:'Соус Наршараб в подарок, лаваш, лук.'},
+      {cat:'grill',label:'Шашлыки на мангале',name:'Шашлык Ассорти ~ 2 кг',price:'4500 ₽',desc:'Баранина, свиная шейка, люля баранина, ханкебаб, люля куриное, куриное филе, крылышки, овощи на гриле, картофель, 2 соуса, 2 аджики.'},
+      {cat:'sauce',label:'Соусы',name:'Сюзьма',price:'40 гр · 90 ₽',desc:'Домашний соус.'},
+      {cat:'sauce',label:'Соусы',name:'Аджика',price:'40 гр · 90 ₽',desc:'Острая аджика.'},
+      {cat:'sauce',label:'Соусы',name:'Кетчуп',price:'40 гр · 90 ₽',desc:'Классический кетчуп.'},
+      {cat:'sauce',label:'Соусы',name:'Сырный',price:'40 гр · 90 ₽',desc:'Сливочный сырный соус.'},
+      {cat:'sauce',label:'Соусы',name:'Сладкий чили',price:'40 гр · 90 ₽',desc:'Сладко-острый соус.'},
+      {cat:'sauce',label:'Соусы',name:'Барбекю',price:'40 гр · 90 ₽',desc:'Дымный соус барбекю.'},
+      {cat:'sauce',label:'Соусы',name:'Базиличный',price:'40 гр · 90 ₽',desc:'Соус с базиликом.'},
+      {cat:'sauce',label:'Соусы',name:'Наршараб (гранатовый)',price:'40 гр · 90 ₽',desc:'Гранатовый соус.'},
+      {cat:'saj',label:'Садж',name:'Садж куриный',price:'3000 ₽',desc:'Куриное филе, лук, помидоры, болгарский перец, грибы, баклажан, кабачок, лаваш, зелень, картофель, соус аджика.'},
+      {cat:'saj',label:'Садж',name:'Садж с телятиной',price:'4000 ₽',desc:'Телятина, лук, помидоры, болгарский перец, грибы, баклажан, кабачок, лаваш, зелень, картофель, соус аджика.'},
+      {cat:'saj',label:'Садж',name:'Садж баранина',price:'4000 ₽',desc:'Мякоть баранины, семечки баранина, лук, помидоры, болгарский перец, грибы, баклажан, кабачок, лаваш, зелень, картофель, соус аджика.'},
+      {cat:'saj',label:'Садж',name:'Садж ассорти',price:'3500 ₽',desc:'Говяжья вырезка, семечки баранина, куриное филе, свиная вырезка, лук, помидоры, болгарский перец, грибы, баклажан, кабачок, лаваш, зелень, картофель, соус аджика.'},
+      {cat:'garnish',label:'Гарниры',name:'Картофель фри',price:'200 гр · 300 ₽',desc:'Хрустящий картофель.'},
+      {cat:'garnish',label:'Гарниры',name:'Картофель по-деревенски',price:'200 гр · 300 ₽',desc:'Румяный картофель дольками.'},
+      {cat:'garnish',label:'Гарниры',name:'Картофель бейби на шампуре',price:'200 гр · 350 ₽',desc:'Молодой картофель на шампуре.'},
+      {cat:'garnish',label:'Гарниры',name:'Шампиньоны на мангале',price:'250 гр · 400 ₽',desc:'Грибы с дымком.'},
+      {cat:'garnish',label:'Гарниры',name:'Помидор на мангале',price:'1 шт · 100 ₽',desc:'Запечённый помидор.'},
+      {cat:'garnish',label:'Гарниры',name:'Овощи на мангале',price:'250 гр · 400 ₽',desc:'Баклажан, кабачок, грибы, помидоры, лук, перец.'},
+      {cat:'hot',label:'Горячие блюда',name:'Горячая сковородка с курицей',price:'300 гр · 600 ₽',desc:'Картофель, куриная грудка, лук, грибы, сыр моцарелла.'},
+      {cat:'hot',label:'Горячие блюда',name:'Горячая сковородка со свининой',price:'300 гр · 650 ₽',desc:'Картофель, свинина, лук, грибы, сыр моцарелла.'},
+      {cat:'hot',label:'Горячие блюда',name:'Жаркое с курицей',price:'300 гр · 600 ₽',desc:'Картофель, курица, лук, баклажан, кабачок, болгарский перец, помидор.'},
+      {cat:'hot',label:'Горячие блюда',name:'Жаркое из телятины',price:'300 гр · 650 ₽',desc:'Телятина, овощи и пряный соус.'},
+      {cat:'hot',label:'Горячие блюда',name:'Жаркое из свинины',price:'300 гр · 650 ₽',desc:'Свинина, овощи и пряный соус.'},
+      {cat:'hot',label:'Горячие блюда',name:'Стейк семги в сливочно-икорном соусе',price:'1 порция · 1450 ₽',desc:'Стейк семги, сливочно-икорный соус, зелень, долька лимона.'},
+      {cat:'hot',label:'Горячие блюда',name:'Креветки магаданские',price:'200 гр · 900 ₽',desc:'Горячая подача.'},
+      {cat:'hot',label:'Горячие блюда',name:'Мидии в створках',price:'300 гр · 750 ₽',desc:'Сливочно-чесночный соус. Может содержать сколы раковин.'},
+      {cat:'pasta',label:'Паста',name:'Паста с креветками и соусом песто',price:'280 гр · 600 ₽',desc:'Тальятелле, сыр пармезан, соус песто, креветки.'},
+      {cat:'pasta',label:'Паста',name:'Паста с курицей по-домашнему [ХИТ ✓]',price:'280 гр · 550 ₽',desc:'Куриная грудка, шампиньоны, сливки, сыр пармезан, спагетти.'},
+      {cat:'pasta',label:'Паста',name:'Карбонара',price:'280 гр · 550 ₽',desc:'Бекон, яйца, сыр пармезан, сливки, спагетти.'},
+      {cat:'pizza',label:'Пицца',name:'Пицца Мачете',price:'650 ₽',desc:'Красный соус, моцарелла, мясное ассорти.'},
+      {cat:'pizza',label:'Пицца',name:'Пицца Маргарита',price:'550 ₽',desc:'Красный соус, базилик, моцарелла.'},
+      {cat:'pizza',label:'Пицца',name:'4 сыра',price:'650 ₽',desc:'Белый соус, моцарелла, чеддер, сулугуни, мраморный сыр.'},
+      {cat:'pizza',label:'Пицца',name:'Пицца Цезарь',price:'650 ₽',desc:'Белый соус, помидоры черри, куриная грудка, айсберг, моцарелла, пармезан.'},
+      {cat:'pizza',label:'Пицца',name:'Пицца Пепперони',price:'600 ₽',desc:'Красный соус, пепперони, моцарелла.'},
+      {cat:'pizza',label:'Пицца',name:'Пицца с креветками и рукколой',price:'650 ₽',desc:'Красный соус, креветки, руккола, помидоры черри, моцарелла.'},
+      {cat:'pizza',label:'Пицца',name:'Хачапури по-аджарски',price:'600 ₽',desc:'Горячая лодочка с сыром.'},
+      {cat:'pizza',label:'Пицца',name:'Хачапури по-Мегрельски',price:'650 ₽',desc:'Хачапури с сыром по-мегрельски.'},
+      {cat:'soup',label:'Супы',name:'Куриный суп с лапшой',price:'300 гр · 350 ₽',desc:'Домашняя лапша, куриное мясо, свежая зелень.'},
+      {cat:'soup',label:'Супы',name:'Грибной крем-суп',price:'300 гр · 350 ₽',desc:'Шампиньоны, белый гриб, сливки, сыр пармезан, сухарики, лук, чеснок.'},
+      {cat:'soup',label:'Супы',name:'Том ям [ХИТ ✓]',price:'300/70 гр · 600 ₽',desc:'Креветки, шампиньоны, помидоры черри, мидии, рис.'},
+      {cat:'soup',label:'Супы',name:'Бозбаш из баранины',price:'300 гр · 500 ₽',desc:'Баранина, вареный картофель, нут, зелень, бульон.'},
+      {cat:'soup',label:'Супы',name:'Солянка',price:'300 гр · 450 ₽',desc:'Баранина, овощи, бульон, зелень.'},
+      {cat:'soup',label:'Супы',name:'Пельмени с бульоном',price:'250 гр · 450 ₽',desc:'Баранина, овощи, бульон, зелень.'},
+      {cat:'soup',label:'Супы',name:'Хашлама',price:'300 гр · 500 ₽',desc:'Баранина, овощи, бульон, зелень.'},
+      {cat:'salads',label:'Салаты',name:'Мачете',price:'250 гр · 700 ₽',desc:'Жареная говядина, лук, сладкий перец, микс салатов, кунжут, фирменный соус. На банкет не подается.'},
+      {cat:'salads',label:'Салаты',name:'Настроение',price:'250 гр · 650 ₽',desc:'Говядина, куриное филе, соленые огурцы, свежие огурцы, микс салата, болгарский перец, ореховый соус.'},
+      {cat:'salads',label:'Салаты',name:'Восточный',price:'250 гр · 550 ₽',desc:'Отварной говяжий язык, корнишоны, черри, сладкий перец, микс салатов, грецкий орех, фирменный соус.'},
+      {cat:'salads',label:'Салаты',name:'Салат Кавказский',price:'250 гр · 600 ₽',desc:'Отварная говядина, красная фасоль, сладкий перец, перец чили, красный лук, кинза, грецкий орех, специи.'},
+      {cat:'salads',label:'Салаты',name:'Цезарь с креветками [ХИТ ✓]',price:'250 гр · 550 ₽',desc:'Айсберг, сыр пармезан, креветки, сухарики, соус Цезарь.'},
+      {cat:'salads',label:'Салаты',name:'Цезарь с курицей',price:'250 гр · 500 ₽',desc:'Айсберг, сыр пармезан, куриная грудка, сухарики, соус Цезарь.'},
+      {cat:'salads',label:'Салаты',name:'Салат с уткой',price:'200 гр · 700 ₽',desc:'Микс салатов, вяленая утиная грудка, сыр с плесенью, манговая заправка, груша, кедровый орех.'},
+      {cat:'salads',label:'Салаты',name:'Тибия',price:'250 гр · 550 ₽',desc:'Баклажан, сыр фета, руккола, томаты черри, кедровые орехи, острый соус.'},
+      {cat:'salads',label:'Салаты',name:'Греческий',price:'230 гр · 450 ₽',desc:'Огурцы, помидоры, перец, айсберг, сыр фета, маслины, фирменный соус.'},
+      {cat:'salads',label:'Салаты',name:'Чобан',price:'230 гр · 500 ₽',desc:'Огурцы, помидоры, сок лимона, оливковое масло, кинза, брынза.'},
+      {cat:'snacks',label:'Закуски',name:'Мясное плато',price:'280 гр · 750 ₽',desc:'Говядина, свинина, индейка, курица, сервелат.'},
+      {cat:'snacks',label:'Закуски',name:'Сырное плато',price:'280 гр · 750 ₽',desc:'Чеддер, мраморный сыр, песто грин, песто ред, виноград, грецкий орех, мед.'},
+      {cat:'snacks',label:'Закуски',name:'Фруктовое плато',price:'700 гр · 950 ₽',desc:'Сезонные фрукты.'},
+      {cat:'snacks',label:'Закуски',name:'Овощное плато',price:'300 гр · 550 ₽',desc:'Сладкий перец, томат, огурец, зелень.'},
+      {cat:'snacks',label:'Закуски',name:'Рулет с ветчиной',price:'7 шт · 600 ₽',desc:'Закуска для компании.'},
+      {cat:'snacks',label:'Закуски',name:'Рулет с баклажаном',price:'7 шт · 600 ₽',desc:'Закуска для компании.'},
+      {cat:'snacks',label:'Закуски',name:'Соленья домашние',price:'300 гр · 550 ₽',desc:'Домашние соленья.'},
+      {cat:'snacks',label:'Закуски',name:'Тарталетки с курицей',price:'8 шт · 700 ₽',desc:'Порционная закуска.'},
+      {cat:'snacks',label:'Закуски',name:'Тарталетки с икрой',price:'8 шт · 700 ₽',desc:'Порционная закуска.'},
+      {cat:'snacks',label:'Закуски',name:'Жульен куриный',price:'1 порция · 400 ₽',desc:'Горячая закуска.'},
+      {cat:'snacks',label:'Закуски',name:'Рыбное плато',price:'1 порция · 850 ₽',desc:'Ассорти рыбы.'},
+      {cat:'snacks',label:'Закуски',name:'Брускетта с семгой',price:'250 гр · 450 ₽',desc:'Чиабатта, сливочный сыр, руккола, томаты, семга.'},
+      {cat:'snacks',label:'Закуски',name:'Брускетта с креветкой',price:'250 гр · 450 ₽',desc:'Чиабатта, сливочный сыр, руккола, томаты, креветки.'},
+      {cat:'snacks',label:'Закуски',name:'Брынза',price:'100 гр · 300 ₽',desc:'Брынза к столу.'},
+      {cat:'snacks',label:'Закуски',name:'Сельдь по-Русски',price:'300 гр · 550 ₽',desc:'Сельдь, картофель отварной, соленые огурцы, лук.'},
+      {cat:'snacks',label:'Закуски',name:'Крылья Баффало',price:'300 гр · 500 ₽',desc:'Крыло куриное, соевый соус, табаско, мед, морковь.'},
+      {cat:'beer',label:'Закуски к пиву',name:'Сет Мачете',price:'1 шт · 1500 ₽',desc:'Креветки, чесночные гренки, наггетсы, луковые кольца, жареные пельмени, соус.'},
+      {cat:'beer',label:'Закуски к пиву',name:'Язык с хреном',price:'200 гр · 600 ₽',desc:'Холодная закуска.'},
+      {cat:'beer',label:'Закуски к пиву',name:'Луковые кольца в кляре',price:'8 шт · 300 ₽',desc:'Хрустящие луковые кольца.'},
+      {cat:'beer',label:'Закуски к пиву',name:'Кольца кальмара в кляре',price:'150 гр · 650 ₽',desc:'Хрустящие кольца кальмара.'},
+      {cat:'beer',label:'Закуски к пиву',name:'Королевские креветки',price:'12 шт · 1200 ₽',desc:'Горячая закуска.'},
+      {cat:'beer',label:'Закуски к пиву',name:'Наггетсы',price:'8 шт · 400 ₽',desc:'Куриные наггетсы.'},
+      {cat:'beer',label:'Закуски к пиву',name:'Пельмени жареные',price:'150 гр · 450 ₽',desc:'Жареные пельмени.'},
+      {cat:'beer',label:'Закуски к пиву',name:'Чесночные гренки',price:'150 гр · 300 ₽',desc:'Хрустящие гренки.'},
+      {cat:'beer',label:'Закуски к пиву',name:'Чипсы к пиву',price:'1 порция · 250 ₽',desc:'Хрустящие чипсы.'},
+      {cat:'beer',label:'Закуски к пиву',name:'Сыр косичка',price:'50-60 гр · 250 ₽',desc:'Копчёный сыр.'},
+      {cat:'beer',label:'Закуски к пиву',name:'Арахис соленый',price:'150 гр · 250 ₽',desc:'Соленый арахис.'},
+      {cat:'dessert',label:'Хлеб',name:'Лепешка',price:'100 ₽',desc:'Свежая лепешка.'},
+      {cat:'dessert',label:'Хлеб',name:'Лаваш тонкий',price:'40 ₽',desc:'Тонкий лаваш.'},
+      {cat:'dessert',label:'Десерты',name:'Чизкейк классический',price:'130 гр · 300 ₽',desc:'Мягкий сливочный десерт.'},
+      {cat:'dessert',label:'Десерты',name:'Мороженое',price:'150 гр · 250 ₽',desc:'3 шарика на выбор.'},
+      {cat:'dessert',label:'Десерты',name:'Пахлава',price:'1 шт · 100 ₽',desc:'Слоёная пахлава.'},
+      {cat:'dessert',label:'Десерты',name:'Азербайджанское варенье',price:'1 порция · 200 ₽',desc:'Сладкое завершение.'},
+      {cat:'banquet',label:'Банкетное меню',name:'Мясо по-французски из курицы',price:'250 гр · 550 ₽',desc:'Дополнение к основному меню.'},
+      {cat:'banquet',label:'Банкетное меню',name:'Мясо по-французски из свинины',price:'250 гр · 600 ₽',desc:'Дополнение к основному меню.'},
+      {cat:'banquet',label:'Банкетное меню',name:'Жульен куриный',price:'1 порция · 400 ₽',desc:'Дополнение к основному меню.'},
+      {cat:'banquet',label:'Банкетное меню',name:'Жульен грибной',price:'1 порция · 400 ₽',desc:'Дополнение к основному меню.'},
+      {cat:'banquet',label:'Банкетное меню',name:'Жульен с языком и грибами',price:'1 порция · 450 ₽',desc:'Дополнение к основному меню.'},
+      {cat:'banquet',label:'Банкетные салаты',name:'Оливье',price:'200 гр · 500 ₽',desc:'Банкетная подача.'},
+      {cat:'banquet',label:'Банкетные салаты',name:'Фантазия с грибами',price:'200 гр · 500 ₽',desc:'Банкетная подача.'},
+      {cat:'banquet',label:'Банкетные салаты',name:'Крабовый',price:'200 гр · 500 ₽',desc:'Банкетная подача.'},
+      {cat:'banquet',label:'Банкетные салаты',name:'Грибы грузди',price:'200 гр · 550 ₽',desc:'Банкетная подача.'},
+      {cat:'banquet',label:'Банкетные супы',name:'Солянка',price:'350 гр · 450 ₽',desc:'Банкетная подача.'},
+      {cat:'banquet',label:'Банкетные супы',name:'Бульон с треугольником',price:'1 порция · 450 ₽',desc:'Банкетная подача.'}
+    ];
+    const grid=document.querySelector('#menuGrid'), buttons=[...document.querySelectorAll('.filter')];
+    function render(category='all'){grid.innerHTML=dishes.filter(item=>category==='all'||item.cat===category).map(item=>`<article class="card"><div><div class="card-top"><span class="category">${item.label}</span><span class="price">${item.price}</span></div><h2>${item.name}</h2><p>${item.desc}</p></div></article>`).join('');}
+    buttons.forEach(button=>button.addEventListener('click',()=>{buttons.forEach(item=>item.classList.remove('active'));button.classList.add('active');render(button.dataset.category)}));
+    render();
+  </script>
+</body>
+</html>
+
