@@ -51,6 +51,9 @@
     @media(max-width:900px){ .links { gap:14px; } .menu-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } }
     @media(max-width:650px){ .nav { top:12px; margin-top:12px; height:54px; padding:0 16px; grid-template-columns:auto 1fr auto; } .links { display:none; } .brand { grid-column:1; } .nav-right { grid-column:3; margin-left:auto; display:flex; align-items:center; gap:9px; } .mobile-menu-toggle { display:inline-flex; align-items:center; justify-content:center; height:32px; padding:0 10px; border:1px solid rgba(25,18,15,.18); border-radius:999px; background:transparent; color:var(--ink); font:800 10px/1 "Manrope",system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; cursor:pointer; } .mobile-menu-toggle[aria-expanded="true"] { background:var(--ink); color:var(--paper); } .mobile-menu { position:fixed; z-index:45; top:76px; left:20px; right:20px; display:none; grid-template-columns:1fr 1fr; gap:8px; padding:12px; border:1px solid rgba(25,18,15,.12); border-radius:22px; background:rgba(247,237,218,.97); box-shadow:0 18px 42px -24px rgba(25,18,15,.55); } .mobile-menu.open { display:grid; } .mobile-menu a { padding:13px 12px; border:1px solid rgba(25,18,15,.12); border-radius:14px; font:800 11px/1 "Manrope",system-ui,sans-serif; letter-spacing:.06em; text-transform:uppercase; } .mobile-menu a:last-child { grid-column:1 / -1; background:var(--accent); border-color:var(--accent); color:var(--paper); text-align:center; } .nav-right a { font-size:10px; } .menu-hero { margin-top:88px; } h1 { font-size:19vw; } .menu-toolbar { align-items:flex-start; flex-direction:column; } .note { white-space:normal; } .menu-grid { grid-template-columns:1fr; } .card { min-height:200px; } .card-top { display:block; } .price { display:block; margin-top:7px; text-align:left; font-size:clamp(24px,8vw,30px); } .menu-footer { align-items:flex-start; flex-direction:column; margin-top:56px; } }
   </style>
+<link rel="stylesheet" href="order.css" />
+  <script src="saby-config.js" defer></script>
+  <script src="saby-order.js" defer></script>
 </head>
 <body>
   <div class="atmo"></div>
@@ -59,9 +62,9 @@
     <nav class="links" aria-label="Основная навигация"><a href="index.html#hero">Главная</a><a href="menu.html" aria-current="page">Меню</a><a href="index.html#about">О нас</a><a href="index.html#contacts">Контакты</a></nav>
     <div class="nav-right"><button class="mobile-menu-toggle" type="button" aria-expanded="false" aria-controls="mobileMenu">Меню</button><a href="https://vk.ru/cafemachete">ВКонтакте</a></div>
   </header>
-  <nav class="mobile-menu" id="mobileMenu" aria-label="Мобильная навигация"><a href="index.html#hero">Главная</a><a href="menu.html">Меню</a><a href="index.html#about">О нас</a><a href="index.html#contacts">Контакты</a><a href="https://vk.ru/cafemachete">ВКонтакте</a></nav>
+  <nav class="mobile-menu" id="mobileMenu" aria-label="Мобильная навигация"><a href="index.html#hero">Главная</a><a href="menu.html">Меню</a><a href="index.html#about">О нас</a><a href="index.html#contacts">Контакты</a><a class="order-link" data-order-link href="order.html">Онлайн-заказ <span aria-hidden="true">↗</span></a><a href="https://vk.ru/cafemachete">ВКонтакте</a></nav>
   <main>
-    <section class="menu-hero"><p class="eyebrow">Меню • Мачете • Казань</p><h1>Выбирай,<br><span>что по душе</span></h1><p class="intro">Большой стол начинается с первого заказа. Выбирайте любимое, собирайте компанию и оставайтесь до последней чашки.</p></section>
+    <section class="menu-hero"><p class="eyebrow">Меню • Мачете • Казань</p><h1>Выбирай,<br><span>что по душе</span></h1><p class="intro">Большой стол начинается с первого заказа. Выбирайте любимое, собирайте компанию и оставайтесь до последней чашки.</p><div class="order-entry"><a class="order-link" data-order-link href="order.html">Онлайн-заказ <span aria-hidden="true">↗</span></a><p>Оформление заказа — в сервисе Saby.</p></div></section>
     <section class="menu-shell" id="menu"><div class="menu-toolbar"><div class="filters" role="tablist" aria-label="Категории меню"><button class="filter active" data-category="all" type="button">Всё меню</button><button class="filter" data-category="bar" type="button">Бар</button><button class="filter" data-category="grill" type="button">Гриль</button><button class="filter" data-category="saj" type="button">Садж</button><button class="filter" data-category="garnish" type="button">Гарниры</button><button class="filter" data-category="hot" type="button">Горячее</button><button class="filter" data-category="pasta" type="button">Паста</button><button class="filter" data-category="pizza" type="button">Пицца</button><button class="filter" data-category="soup" type="button">Супы</button><button class="filter" data-category="salads" type="button">Салаты</button><button class="filter" data-category="snacks" type="button">Закуски</button><button class="filter" data-category="beer" type="button">К пиву</button><button class="filter" data-category="dessert" type="button">Десерты</button><button class="filter" data-category="banquet" type="button">Банкет</button></div><p class="note">Полное меню Мачете · цены по PDF меню</p></div><div class="menu-grid" id="menuGrid"></div></section>
   </main>
   <footer class="menu-footer"><span>Мачете · Казань · каждый день 12:00—23:00</span><a class="vk-link" href="https://vk.ru/cafemachete">Новости и акции во ВКонтакте ↗</a></footer>
@@ -207,6 +210,6 @@
     buttons.forEach(button=>button.addEventListener('click',()=>{buttons.forEach(item=>item.classList.remove('active'));button.classList.add('active');render(button.dataset.category)}));
     render();
   </script>
+<div class="order-dock"><a class="order-link" data-order-link href="order.html">Онлайн-заказ <span aria-hidden="true">↗</span></a></div>
 </body>
 </html>
-
