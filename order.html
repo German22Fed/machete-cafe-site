@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Онлайн-заказ — Мачете</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Oswald:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="order.css" />
+  <script src="saby-config.js" defer></script>
+  <script src="saby-order.js" defer></script>
+</head>
+<body class="order-page">
+  <header class="order-header"><a class="order-brand" href="index.html">✦ Мачете</a><a class="order-back" href="menu.html">Смотреть меню ↗</a></header>
+  <main class="order-main">
+    <section><p class="order-eyebrow">Мачете · Онлайн-заказ</p><h1 class="order-title">Любимое.<br>С пылу.<br><span>С жару.</span></h1><p class="order-description">Гриль, паста, пицца — выбирайте то, что по душе. Здесь начинается ваш заказ в «Мачете».</p></section>
+    <section class="order-panel" data-order-pending>
+      <span class="order-status">Скоро онлайн</span><h2>Готовим всё к запуску</h2>
+      <p>Онлайн-заказ пока недоступен. Посмотрите меню или свяжитесь с кафе во ВКонтакте, чтобы уточнить возможность заказа.</p>
+      <a class="order-link" href="https://vk.ru/cafemachete">Связаться с кафе <span aria-hidden="true">↗</span></a>
+      <a class="order-text-link" href="menu.html">Посмотреть меню</a>
+    </section>
+    <section class="order-panel" data-order-ready hidden>
+      <span class="order-status ready">Заказ через Saby</span><h2>Соберите свой заказ</h2>
+      <p>В Saby можно выбрать блюда и оформить заказ. Доступные способы получения, итоговая стоимость и время будут указаны при оформлении.</p>
+      <a class="order-link" data-order-link href="order.html">Перейти к заказу <span aria-hidden="true">↗</span></a>
+      <a class="order-text-link" href="https://vk.ru/cafemachete">Вопросы? Свяжитесь с кафе</a>
+    </section>
+  </main>
+  <footer class="order-foot">Мачете · кафе с характером</footer>
+</body>
+</html>
