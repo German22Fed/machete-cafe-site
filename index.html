@@ -111,21 +111,24 @@
       #row { grid-template-columns:1fr; gap:14px; padding:3vh 6vw 6vh; }
     }
   </style>
+<link rel="stylesheet" href="order.css" />
+  <script src="saby-config.js" defer></script>
+  <script src="saby-order.js" defer></script>
 </head>
 <body>
   <div class="atmo"><canvas id="bg" width="96" height="60"></canvas></div>
   <header class="nav" id="nav">
     <a class="brand" href="index.html#hero"><svg viewBox="0 0 25 25" aria-hidden="true"><circle cx="12.5" cy="12.5" r="12" fill="#ed5d2d"/><path d="M6 17 17.5 5.5" stroke="#f7edda" stroke-width="2.4" stroke-linecap="round"/><path d="M7.5 8.5 16.5 17.5" stroke="#19120f" stroke-width="1.4" stroke-linecap="round" opacity=".7"/></svg><span>Мачете</span></a>
     <nav class="links" aria-label="Основная навигация"><a href="index.html#hero">Главная</a><a href="menu.html">Меню</a><a href="index.html#about">О нас</a><a href="index.html#contacts">Контакты</a></nav>
-    <div class="nav-right"><button class="mobile-menu-toggle" type="button" aria-expanded="false" aria-controls="mobileMenu">Меню</button><a class="login" href="https://vk.ru/cafemachete"><span class="vk-full">ВКонтакте</span><span class="vk-short">VK</span></a><div class="navcta"><button class="btn" type="button"><span class="lbl">Забронировать</span><span class="dot"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M4.5 2.5 8 6l-3.5 3.5" fill="none" stroke="#19120f" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button></div></div>
+    <div class="nav-right"><button class="mobile-menu-toggle" type="button" aria-expanded="false" aria-controls="mobileMenu">Меню</button><a class="login" href="https://vk.ru/cafemachete"><span class="vk-full">ВКонтакте</span><span class="vk-short">VK</span></a><div class="navcta"><a class="btn" data-order-link href="order.html"><span class="lbl">Онлайн-заказ</span><span class="dot"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M4.5 2.5 8 6l-3.5 3.5" fill="none" stroke="#19120f" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a></div></div>
   </header>
-  <nav class="mobile-menu" id="mobileMenu" aria-label="Мобильная навигация"><a href="index.html#hero">Главная</a><a href="menu.html">Меню</a><a href="index.html#about">О нас</a><a href="index.html#contacts">Контакты</a><a href="https://vk.ru/cafemachete">ВКонтакте</a></nav>
+  <nav class="mobile-menu" id="mobileMenu" aria-label="Мобильная навигация"><a href="index.html#hero">Главная</a><a href="menu.html">Меню</a><a href="index.html#about">О нас</a><a href="index.html#contacts">Контакты</a><a class="order-link" data-order-link href="order.html">Онлайн-заказ <span aria-hidden="true">↗</span></a><a href="https://vk.ru/cafemachete">ВКонтакте</a></nav>
   <main>
     <section class="hero" id="hero">
       <h1 id="h1"><span class="hl">Мачете</span> — кафе<br>с характером</h1>
       <p class="trust fade-up" id="contacts" style="--d:1.15s">Казань · каждый день с 12:00 до 23:00</p>
       <div class="sticker fade-up" style="--d:1.05s">остро<br>жарко<br>вкусно</div>
-      <div class="hero-cta fade-up" style="--d:1.3s"><button class="btn lg" type="button">Забронировать<span class="dot"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5.5 3.5 10 8l-4.5 4.5" fill="none" stroke="#19120f" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button></div>
+      <div class="hero-cta fade-up" style="--d:1.3s"><a class="btn lg" data-order-link href="order.html">Онлайн-заказ<span class="dot"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5.5 3.5 10 8l-4.5 4.5" fill="none" stroke="#19120f" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a></div>
       <div class="logos" id="menu" aria-label="Что есть в Мачете">
         <div class="logo-cell" style="--d:1.25s"><div class="logo-mark"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 14c3-5 5-8 7-8s4 3 7 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M4 16h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span>ГРИЛЬ</span></div></div>
         <div class="logo-cell" style="--d:1.32s"><div class="logo-mark script">Паста</div></div>
@@ -165,4 +168,3 @@
   </script>
 </body>
 </html>
-
